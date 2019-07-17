@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import { fetchTrivia } from './apiCalls.js';
+import TriviaSection from './TriviaSection.js';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      trivia: [],
+      error: ''
+    }
+  }
+
+  componentDidMount() {
+    fetchTrivia()
+    .then(response => this.setState({trivia: response.results}))
+    .catch(error => this.setState({error: error.message}))
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <header>
+          <h1>Trivia!</h1>
+        </header>
+        {this.state.error && <h2>{this.state.error}</h2>}
+        {this.state.trivia.length &&<TriviaSection trivia={this.state.trivia} />}
+      </div>
+    );
+  }
 }
 
 export default App;
