@@ -25,7 +25,7 @@ class App extends Component {
           <h1>Trivia!</h1>
         </header>
         {this.state.error && <h2>{this.state.error}</h2>}
-        {this.state.trivia.length &&<TriviaSection trivia={this.state.trivia} />}
+        <TriviaSection trivia={this.state.trivia} />
       </div>
     );
   }
